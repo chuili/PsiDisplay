@@ -65,7 +65,6 @@ public class PsiParserTest {
             PowerMockito.verifyPrivate(psiParser).invoke("parseRegionMetadata", regionData);
         } catch (JSONException e) {
             System.out.println("Expected: JSONException");
-            e.printStackTrace();
             Assert.assertTrue("regionDataJsonArray is null.".equalsIgnoreCase(e.getMessage()));
         } catch (Exception e) {
             System.out.println("Unexpected: Exception");

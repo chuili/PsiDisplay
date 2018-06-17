@@ -133,10 +133,9 @@ public class PsiParser {
         if (regionMetadata == null) {
             throw new NullPointerException("regionMetadata is null.");
         }
+
         JSONArray regionDataJsonArray = new JSONArray(regionMetadata);
 
-        System.out.println(regionDataJsonArray.toString());
-        System.out.println(regionDataJsonArray.length());
         if (regionDataJsonArray == null || regionDataJsonArray.length() == 0) {
             throw new JSONException("regionDataJsonArray is null.");
         }

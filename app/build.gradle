@@ -19,10 +19,14 @@ android {
         }
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'obfuscation/proguard/proguard-rules-debug.pro'
+        }
         release {
             minifyEnabled true
             signingConfig signingConfigs.internal
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'obfuscation/proguard/proguard-rules-release.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'obfuscation/proguard/proguard-rules-release.pro'
         }
     }
     buildToolsVersion '27.0.3'
