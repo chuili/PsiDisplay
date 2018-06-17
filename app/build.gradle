@@ -10,10 +10,19 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        internal {
+            storeFile file('../AppSigningCerts/InternalAppSigningCert/release.jks')
+            storePassword 'androidtest'
+            keyAlias 'AndroidKey'
+            keyPassword 'androidtest'
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            signingConfig signingConfigs.internal
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'obfuscation/proguard/proguard-rules-release.pro'
         }
     }
     buildToolsVersion '27.0.3'
@@ -26,4 +35,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    testImplementation 'org.powermock:powermock-api-mockito:1.6.5'
+    testImplementation 'org.powermock:powermock-module-junit4:1.6.5'
+    testImplementation 'org.powermock:powermock-module-junit4-rule-agent:1.6.5'
+    testImplementation 'org.powermock:powermock-module-junit4-rule:1.6.5'
+    testImplementation 'org.json:json:20140107'
 }

@@ -8,11 +8,6 @@ public class GetPsiResponse extends CommandResponse {
     private String regionMetadata;
     private String items;
     private String apiInfo;
-//    private PsiInfo psiInfoNorth;
-//    private PsiInfo psiInfoSouth;
-//    private PsiInfo psiInfoEast;
-//    private PsiInfo psiInfoWest;
-//    private PsiInfo psiInfoCentral;
 
 
     public GetPsiResponse(final int httpResponseCode) {

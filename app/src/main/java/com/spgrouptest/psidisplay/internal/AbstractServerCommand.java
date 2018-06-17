@@ -34,7 +34,7 @@ public class AbstractServerCommand {
             this.requestMethod = method;
         } catch (MalformedURLException e) {
             Log.d(TAG, "Malformed URL!");
-            e.printStackTrace();
+            Log.e(TAG, e.toString());
         }
 
     }
@@ -48,9 +48,8 @@ public class AbstractServerCommand {
             connection.setRequestMethod(requestMethod);
 
             result = handleServerResponse(connection);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
+        } catch (IOException e) {
+            Log.e(TAG, e.toString());
         }
         return result;
     }
@@ -87,8 +86,8 @@ public class AbstractServerCommand {
                 break;
             }
         } catch (IOException e) {
-            e.printStackTrace();
-            Log.i(TAG, "IOException " + e.getMessage());
+            Log.e(TAG, e.toString());
+            Log.d(TAG, "IOException " + e.getMessage());
             result = new Result<>(e.getMessage());
         } finally {
             try {
@@ -99,8 +98,8 @@ public class AbstractServerCommand {
                     inputStreamReader.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
-                Log.e(TAG, "Unable to close the inputStream stream in the finally block. Simply skip it...");
+                Log.e(TAG, e.toString());
+                Log.d(TAG, "Unable to close the inputStream stream in the finally block. Simply skip it...");
             }
         }
         return result;
@@ -130,7 +129,7 @@ public class AbstractServerCommand {
                 jsonRequestEntities.clear();
             } catch (JSONException e) {
                 Log.d(TAG, "JSONException: " + e.getMessage());
-                e.printStackTrace();
+                Log.d(TAG, e.toString());
             }
         }
         return data;
@@ -156,7 +155,7 @@ public class AbstractServerCommand {
             }
         } catch (JSONException e) {
             Log.d(TAG, "JSONException: " + e.getMessage());
-            e.printStackTrace();
+            Log.e(TAG, e.toString());
         }
     }
 

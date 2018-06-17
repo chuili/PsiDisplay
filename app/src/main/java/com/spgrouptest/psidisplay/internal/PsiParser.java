@@ -23,26 +23,6 @@ public class PsiParser {
     private Map<String, String> central;
     private String status;
 
-//    public PsiInfo getPsiInfoEast() {
-//        return psiInfoEast;
-//    }
-//
-//    public PsiInfo getPsiInfoWest() {
-//        return psiInfoWest;
-//    }
-//
-//    public PsiInfo getPsiInfoNorth() {
-//        return psiInfoNorth;
-//    }
-//
-//    public PsiInfo getPsiInfoSouth() {
-//        return psiInfoSouth;
-//    }
-//
-//    public PsiInfo getPsiInfoCentral() {
-//        return psiInfoCentral;
-//    }
-
     public PsiParser(Context context) {
         east = new HashMap<String, String>();
         west = new HashMap<String, String>();
@@ -140,7 +120,7 @@ public class PsiParser {
                     }
                 } catch (JSONException e) {
                     Log.d(TAG, "JSONException: " + e.getMessage());
-                    e.printStackTrace();
+                    Log.e(TAG, e.toString());
                 }
             }
         });
@@ -149,8 +129,14 @@ public class PsiParser {
 
     private void parseRegionMetadata(String regionMetadata) throws JSONException {
         Log.d(TAG, "parseRegionMetadata()");
+
+        if (regionMetadata == null) {
+            throw new NullPointerException("regionMetadata is null.");
+        }
         JSONArray regionDataJsonArray = new JSONArray(regionMetadata);
 
+        System.out.println(regionDataJsonArray.toString());
+        System.out.println(regionDataJsonArray.length());
         if (regionDataJsonArray == null || regionDataJsonArray.length() == 0) {
             throw new JSONException("regionDataJsonArray is null.");
         }
@@ -161,41 +147,31 @@ public class PsiParser {
             }
 
             final JSONObject regionDataJson = regionDataJsonArray.getJSONObject(i);
-//            PsiInfo currentPsiInfo;
             Map<String, String> currHashMap;
             switch (regionDataJson.getString(GetPsiCommand.RESP_PARAM_NAME)) {
                 case "east":
-//                    currentPsiInfo = psiInfoEast;
                     currHashMap = east;
                     break;
                 case "west":
-//                    currentPsiInfo = psiInfoWest;
                     currHashMap = west;
                     break;
                 case "north":
-//                    currentPsiInfo = psiInfoNorth;
                     currHashMap = north;
                     break;
                 case "south":
-//                    currentPsiInfo = psiInfoSouth;
                     currHashMap = south;
                     break;
                 case "central":
-//                    currentPsiInfo = psiInfoCentral;
                     currHashMap = central;
                     break;
                 default:
-//                    currentPsiInfo = new PsiInfo();
                     currHashMap = new HashMap<String, String>();
                     Log.d(TAG, "Undefined region: " + regionDataJson.get(GetPsiCommand.RESP_PARAM_NAME).toString());
             }
 
             final JSONObject labelLocation = regionDataJson.getJSONObject(GetPsiCommand.RESP_PARAM_LABEL_LOCATION);
-            final String latitude = labelLocation.getString(GetPsiCommand.RESP_PARAM_LATITUDE);
-            final String longitude = labelLocation.getString(GetPsiCommand.RESP_PARAM_LONGITUDE);
-
-//            currentPsiInfo.setLatitude(latitude);
-//            currentPsiInfo.setLongitude(longitude);
+            final String latitude = Double.toString(labelLocation.getDouble(GetPsiCommand.RESP_PARAM_LATITUDE));
+            final String longitude = Double.toString(labelLocation.getDouble(GetPsiCommand.RESP_PARAM_LONGITUDE));
 
             currHashMap.put(GetPsiCommand.RESP_PARAM_LATITUDE, latitude);
             currHashMap.put(GetPsiCommand.RESP_PARAM_LONGITUDE, longitude);
@@ -241,28 +217,23 @@ public class PsiParser {
             Log.d(TAG, "reading: " + reading.toString());
 
             if (reading.has(GetPsiCommand.RESP_PARAM_WEST)) {
-//                psiInfoWest.setO3_sub_index(reading.getInt(GetPsiCommand.RESP_PARAM_WEST));
-                west.put(key, reading.getString(GetPsiCommand.RESP_PARAM_WEST));
+                west.put(key, Integer.toString(reading.getInt(GetPsiCommand.RESP_PARAM_WEST)));
             }
 
             if (reading.has(GetPsiCommand.RESP_PARAM_EAST)) {
-//                psiInfoEast.setO3_sub_index(reading.getInt(GetPsiCommand.RESP_PARAM_EAST));
-                east.put(key, reading.getString(GetPsiCommand.RESP_PARAM_EAST));
+                east.put(key, Integer.toString(reading.getInt(GetPsiCommand.RESP_PARAM_EAST)));
             }
 
             if (reading.has(GetPsiCommand.RESP_PARAM_CENTRAL)) {
-//                psiInfoCentral.setO3_sub_index(reading.getInt(GetPsiCommand.RESP_PARAM_CENTRAL));
-                central.put(key, reading.getString(GetPsiCommand.RESP_PARAM_CENTRAL));
+                central.put(key, Integer.toString(reading.getInt(GetPsiCommand.RESP_PARAM_CENTRAL)));
             }
 
             if (reading.has(GetPsiCommand.RESP_PARAM_SOUTH)) {
-//                psiInfoSouth.setO3_sub_index(reading.getInt(GetPsiCommand.RESP_PARAM_SOUTH));
-                south.put(key, reading.getString(GetPsiCommand.RESP_PARAM_SOUTH));
+                south.put(key, Integer.toString(reading.getInt(GetPsiCommand.RESP_PARAM_SOUTH)));
             }
 
             if (reading.has(GetPsiCommand.RESP_PARAM_NORTH)) {
-//                psiInfoNorth.setO3_sub_index(reading.getInt(GetPsiCommand.RESP_PARAM_NORTH));
-                north.put(key, reading.getString(GetPsiCommand.RESP_PARAM_NORTH));
+                north.put(key, Integer.toString(reading.getInt(GetPsiCommand.RESP_PARAM_NORTH)));
             }
         }
     }

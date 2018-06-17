@@ -146,6 +146,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Iterator iterator = map.keySet().iterator();
         while (iterator.hasNext()) {
             String key = iterator.next().toString();
+            if (key == GetPsiCommand.RESP_PARAM_LATITUDE || key == GetPsiCommand.RESP_PARAM_LONGITUDE) {
+                continue;
+            }
             String value = map.get(key);
             readings = readings + key + ": " + value + "\n";
         }
